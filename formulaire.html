@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="node_modules/chosen-js/chosen.min.css">
+
+
+    <title>Document</title>
+</head>
+
+<body class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-danger mt-2" id="errorDiv">
+                Erreur de saisie
+            </div>
+            <form method="post" id="form">
+                <div class="form-group">
+                    <label for="title">Titre</label>
+                    <input type="text" id="title" class="form-control">
+                    <label for="editeur">Maison d'Edition</label>
+                    <input type="text" id="editeur" class="form-control">
+                    <label for="genre">Genre</label>
+                    <input type="text" id="genre" class="form-control">
+                    <label for="auteur">Auteur</label>
+                    <input type="text" id="auteur" class="form-control">
+                </div>
+                <div class="form-group">
+                    <select id="department" class="chosen-select">
+                        <option>Val d'Oise</option>genre
+                        <option>Paris</option>
+                        <option>Haut-de-Seine</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Valider</button>
+            </form>
+        </div>
+    </div>
+    <article>
+
+    </article>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/chosen-js/chosen.jquery.min.js"></script>
+    <script>
+        function Book(title, editeur, genre, auteur) {
+            this.title = title;
+            this.editeur = editeur;
+            this.genre = genre;
+            this.auteur = auteur;
+            this.errorMessage = null;
+        }
+        Book.prototype.validate = function() {
+                var valid = true;
+
+                if (this.title.trim() == "") {
+                    valid = false;
+                    this.errorMessage = "Le titre ne peut être vide";
+                }
+                var titleToAdd = this.title;
+                var bookExists = bookList.some(function(item) {
+                    return item.title == titleToAdd;
+
+                });
+                if (bookExists) {
+                    valid = false;
+                    this.errorMessage = "Ce livre existe déjà ";
+                }
+                return valid;
+            }
+            /* Book.prototype.renderTableRowHead = function () {
+             var $rowHead = $("<tr></tr>");
+             var $titleHead = $("<th></th>");
+             $titleHead.text("The Name of the Book");
+             $rowHead.append($titleHead);
+ 
+             return $rowHead;
+         }*/
+        Book.prototype.renderTableRow = function() {
+            var $row = $("<tr></tr>");
+            var $titleCell = $("<td></td>");
+            $titleCell.text(this.title);
+
+            var $editeurCell = $("<td></td>");
+            $editeurCell.text(this.editeur);
+
+            var $genreCell = $("<td></td>");
+            $genreCell.text(this.genre);
+
+            var $auteurCell = $("<td></td>");
+            $auteurCell.text(this.auteur);
+
+            $row.append($titleCell);
+            $row.append($editeurCell);
+            $row.append($genreCell);
+            $row.append($auteurCell);
+            $deleteCell = $(`<td><button class= "btn btn-danger delete">Supprimer</button></td>`);
+            $row.append($deleteCell);
+            return $row;
+        }
+
+        var bookList = [];
+
+        var data = JSON.parse(window.localStorage.getItem("bookList")) || [];
+
+        for (let item of data) {
+            bookList.push(new Book(item.title, item.editeur, item.genre, item.auteur));
+        }
+        console.log(bookList);
+
+        //var bookList = [new Book("Principes de Philosophie du Droit")];
+        /*const Book = (title)=>{
+            this.title = title; 
+        }*/
+        renderTable = function() {
+            var $table = $(`<table class="table table-bordered table-striped" id="books"></table>`);
+            var $tableHead = $(`<tr><th>The Name of the Book</th><th>Maison d'Edition</th><th>Genre</th><th>Auteur</th><th>Action</th></tr>`);
+            $table.append($tableHead);
+            for (let book of bookList) {
+                console.log(book)
+                $table.append(book.renderTableRow());
+            }
+            $("body").append($table);
+        }
+
+        $(document).ready(function() {
+            renderTable();
+
+            var $errorDiv = $("#errorDiv");
+            var $titleInput = $("#title");
+            var $editeurInput = $("#editeur");
+            var $genreInput = $("#genre");
+            var $auteurInput = $("#auteur");
+
+            $errorDiv.hide();
+
+            $("#form").submit(function(event) {
+                event.preventDefault();
+                //Récupération de la saisie
+                var title = $titleInput.val();
+                var editeur = $editeurInput.val();
+                var genre = $genreInput.val();
+                var auteur = $auteurInput.val();
+
+                //Construction d'une instance de livre 
+                var book = new Book(title, editeur, genre, auteur);
+                if (book.validate()) {
+                    bookList.push(book);
+                    console.log(bookList);
+                    $errorDiv.hide();
+                    $titleInput.val("");
+                    $titleInput.focus();
+                    $editeurInput.val("");
+                    $editeurInput.focus();
+                    $genreInput.val("");
+                    $genreInput.focus();
+                    $auteurInput.val("");
+                    $auteurInput.focus();
+                    $("#books").append(book.renderTableRow());
+                    window.localStorage.setItem("bookList", JSON.stringify(bookList));
+                    // $("article").text(title);
+                } else {
+                    console.log("erreur");
+                    $errorDiv.show();
+                    $errorDiv.text(book.errorMessage);
+                }
+            });
+            $("body").delegate(".delete", "click", function() {
+                var bookTitle = $(this).parent().parent().children().first().text();
+                $(this).parent().parent().remove();
+                var index = bookList.findIndex(function(book) {
+                    return bookTitle == book.title;
+                });
+                bookList.splice(index, 1);
+                window.localStorage.setItem("bookList", JSON.stringify(bookList));
+                // console.log(bookList);
+            });
+
+            $(".chosen-select").chosen({
+                no_results_text: "Oops, nothing found!"
+            });
+            // $("#department").
+            //console.log($("#department"));
+
+        });
+    </script>
+
+
+</body>
+
+</html>

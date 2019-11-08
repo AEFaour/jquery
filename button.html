@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery start</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body class="container-fluid">
+<div class= "row justify-content-center">
+<button type="button" id="dlButton" class="btn btn-danger m-5 col-4">Cliquez-moi</button><br>
+</div>
+    
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("body").delegate("button", "click", function () {
+                var content = "<hr><div><p>On m'a cliqué, </p><br><p> Aïe:  j'ai mal ... </p></div><hr>";
+                $(this).after(content).attr("disabled", "disable");
+                $("div").addClass("card");
+            });
+
+        });
+    </script>
+</body>
+
+</html>

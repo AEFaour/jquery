@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body class="container-fluid">
+
+
+    <ul>
+        <li class="nav-item">
+            <a class="nav-link active clasified kind" href="#">Fruits </a>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Orange</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pommes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Poires</a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active clasified kind" href="#">Legumes </a>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link active kind" href="#">Racines </a>
+                    <ul>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Carottes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pannais</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pommes de terre</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active kind" href="#">Feuilles</a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Choux</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Salade</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Belette</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active clasified kind" href="#">Legumineuses</a>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pois Chiches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Fèves</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+           // $items = $(".clasified");
+            $kind = $(".kind");
+            //$("ul").not(".clasified").hide();
+           /* $items.click(function () {
+                $(this).next("ul").toggle(200);
+            });*/
+            $kind.click(function () {
+                $(this).next("ul").toggle(200);
+            });
+        });
+       /* $(document).ready(function(){
+            $("li ul").hide();
+            $("li a").click(function(){
+                $(this).next("ul").toggle(500);
+            });
+        });*/
+
+    </script>
+</body>
+
+</html>

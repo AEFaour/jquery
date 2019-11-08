@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery start</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h1> Hello </h1>
+    <h1> Salut</h1>
+    <h1> Halo</h1>
+    <h1> Shaloum </h1>
+    <button type="button" id="chColor" class="btn btn-primary">Guten Tag</button>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+   
+    
+    <script>
+        $(document).ready(function () {
+            var $h1 = $("h1");
+            var pos = 0;
+            $h1.hide(1500, function () {
+                console.log("Fin de Hide");
+                $(this).text(function (index, oldValue) {
+                    pos++;
+                    return `${pos} Bonjour (${oldValue})`;
+                });
+            }).show(1500);
+            $("#chColor").click(function () {
+                $("h1").eq(2).css("color", "white").attr("lang", "de").addClass("alert").addClass("alert-danger");
+                $(this).text("Guten Abend");
+                $(this).animate({height: "12rem"});
+                $("body").css("background-color", "black");
+            });
+        });
+
+   // $('h1').text("Waf waf waf");
+    </script>
+</body>
+
+</html>

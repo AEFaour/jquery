@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        h2 {
+            cursor: pointer;
+        }
+        .openTitre {
+            background-color: red;
+            color:blanchedalmond;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body class="p-4">
+    <h2>
+        Premier titre
+    </h2>
+    <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae officia qui sequi magnam adipisci
+        cupiditate non! Praesentium, doloremque facilis quia, voluptate nisi optio culpa quam labore tempore, maxime
+        repudiandae assumenda.
+    </p>
+    <h2>
+        Deuxième titre
+    </h2>
+    <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est nesciunt minima eligendi ad nemo hic expedita
+        accusantium ipsum? Itaque odio aliquam soluta error inventore? Vero ullam modi dignissimos vitae fuga.
+    </p>
+    <h2>
+        Troisième titre
+    </h2>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia error ut consectetur dolorum dolore tenetur
+        obcaecati suscipit provident fugit blanditiis explicabo excepturi debitis, ratione accusamus veritatis, enim
+        molestias quo eveniet?
+    </p>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $titres = $("h2");
+            $para = $("p");
+            $para.hide();
+            $titres.click(function () {
+                $para.hide(200);
+                $titres.removeClass("openTitre");
+                $(this).next("p").toggle(500);
+                $(this).text($(this).text().toUpperCase());
+                $(this).toggleClass("openTitre");
+            });
+        });
+    </script>
+</body>
+
+</html>
